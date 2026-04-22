@@ -31,6 +31,17 @@ export function DashboardTemplate() {
     }
   };
 
+  const handleConfirmRecordDelete = async () => {
+    if (recordToDelete) {
+      try {
+        await deleteProfitRecord(recordToDelete);
+        setRecordToDelete(null);
+      } catch (e) {
+        alert('삭제 중 오류가 발생했습니다.');
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-start md:py-6 relative overflow-hidden">
       {/* 백그라운드 블러 효과 (옵션) */}
@@ -91,6 +102,35 @@ export function DashboardTemplate() {
               <Button
                 className="h-9 px-4 text-sm bg-red-500/90 hover:bg-red-400 text-white font-bold border-transparent"
                 onClick={handleConfirmTickerDelete}
+              >
+                삭제
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 수익 기록 삭제 확인 모달 */}
+      {recordToDelete && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 w-[360px] shadow-2xl shadow-black/50">
+            <h3 className="text-base font-bold text-slate-100 mb-2">수익 기록 삭제</h3>
+            <p className="text-sm text-slate-400 leading-relaxed mb-5">
+              정말로 이 수익 기록을 삭제하시겠습니까?
+              <br />
+              <span className="text-xs text-slate-500 mt-1 inline-block">삭제된 기록은 복구할 수 없습니다.</span>
+            </p>
+            <div className="flex gap-3 justify-end">
+              <Button
+                variant="outline"
+                className="h-9 px-4 text-sm bg-slate-950 border-slate-700 text-slate-300 hover:bg-slate-800"
+                onClick={() => setRecordToDelete(null)}
+              >
+                취소
+              </Button>
+              <Button
+                className="h-9 px-4 text-sm bg-red-500/90 hover:bg-red-400 text-white font-bold border-transparent"
+                onClick={handleConfirmRecordDelete}
               >
                 삭제
               </Button>
