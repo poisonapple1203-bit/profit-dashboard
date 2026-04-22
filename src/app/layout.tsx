@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   description: "누적수익 프로젝트 v2",
 };
 
-export const runtime = 'edge';
 
 export default function RootLayout({
   children,
